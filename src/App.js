@@ -1,10 +1,11 @@
 import { Component } from 'react' ;
-import logo from './logo.svg';
+
+import CardList from './components/card-list/card-list.component';
 import './App.css';
 
 class App extends Component {
   constructor(){
-    console.log('constructor');
+    
     super();
 
     this.state ={
@@ -13,10 +14,12 @@ class App extends Component {
 
       
     };
-    console.log('constructor')
-  } //componentDidMount 
+    
+  } 
+  //componentDidMount
+
      componentDidMount(){
-      console.log('component');
+      
       fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
       .then((users) =>
@@ -31,39 +34,39 @@ class App extends Component {
         )
         )
      }
-  render (){
-    console.log('render');
-    const filteredMonsters = this.state.monsters.filter((monster) => {
-      return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+     onSearchChange = (event) => {
+      const searchField = event.target.value.toLocaleLowerCase();
+      
+      this.setState(() =>  {
+        return { searchField };
       });
+     }
+  render (){
+    
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLocaleLowerCase().includes(searchField);
+      });
+
     return (
     <div className="App">
       <input 
       classname='search-box'
       type='search'
       placeholder='search monsters' 
-      onChange={(event) => {
-        
-        const searchField = event.target.value.toLocaleLowerCase();
-      
-        this.setState(() =>  {
-          return { searchField };
-        });
-      }}
+      onChange={onSearchChange}
       />
       
-      {
-       filteredMonsters.map((monster) => {
-      return <div key={monster.id}> <h1>{monster.name}</h1></div>
-     })}
-     
-    </div>
-  
-  );
-  }
+      
+  <CardList monsters={filteredMonsters}/>
+  </div>
+    );
   
   
   //map is used to iterate over array from left to right 
-}
-
-export default App;
+  
+  }}
+  export default App;
+  
