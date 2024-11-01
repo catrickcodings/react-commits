@@ -13,7 +13,7 @@ class App extends Component {
     this.state ={
       monsters: [],
       searchField:'',
-
+            
       
     };
     
@@ -55,12 +55,14 @@ class App extends Component {
 
     return (
     <div className="App">
+     <h1 classname='app-title'>Monsters rolodex </h1> 
      <SearchBox 
      className='monsters-search-box'
      onChangeHandler={onSearchChange} 
      placeholder='search monsters' />
      <CardList monsters={filteredMonsters}/>
   </div>
+       
     );
   
   
